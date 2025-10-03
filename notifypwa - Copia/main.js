@@ -105,7 +105,7 @@ startBtn.addEventListener('click', async () => {
   const n = parseInt(qty.value, 10) || 1;
   const delay = Math.max(1, parseInt(gap.value, 10) || 1) * (unit === 'm' ? 60000 : 1000);
 
-  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'NotifyLab') : (titleInput.value || appName.value || selectedAppName || 'Hotmart');
+  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'Hotmart') : (titleInput.value || appName.value || selectedAppName || 'Hotmart');
   const parts = [];
   if (!useAppAsTitle.checked && titleInput.value) parts.push(titleInput.value);
   if (descInput.value) parts.push(descInput.value);
