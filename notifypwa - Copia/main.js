@@ -31,8 +31,8 @@ const previewBody = document.getElementById('previewBody');
 const previewIcon = document.getElementById('previewIcon');
 
 let unit = 's'; // s|m
-let iconDataUrl = 'icons/icon-192.png';
-let selectedAppName = 'NotifyLab';
+let iconDataUrl = 'icons/unnamed.webp';
+let selectedAppName = 'Hotmart';
 
 qty.addEventListener('input', () => qtyLabel.textContent = qty.value);
 
@@ -51,7 +51,7 @@ logoChoices.addEventListener('click', (ev) => {
   btn.classList.add('active');
   const type = btn.dataset.builtin;
   const map = {
-    default: { icon: 'icons/icon-192.png', name: 'NotifyLab' },
+    default: { icon: 'icons/unnamed.webp', name: 'Hotmart' },
     kiwify: { icon: 'icons/swatch-kiwify.png', name: 'Kiwify' },
     c6: { icon: 'icons/swatch-c6.png', name: 'C6 Bank' },
     e: { icon: 'icons/swatch-e.png', name: 'Ebanx' },
@@ -80,17 +80,14 @@ logoUpload.addEventListener('change', async () => {
 });
 
 function updatePreview(){
-  selectedAppName = appName.value || selectedAppName || 'NotifyLab';
+  selectedAppName = appName.value || selectedAppName || 'Hotmart';
   const title = useAppAsTitle.checked ? selectedAppName : (titleInput.value || selectedAppName);
   previewTitle.textContent = title;
-  const parts = [];
-  if (!useAppAsTitle.checked && titleInput.value) parts.push(titleInput.value);
-  if (descInput.value) parts.push(descInput.value);
-  previewBody.textContent = parts.join(' • ') || 'Descrição de exemplo';
+  previewBody.textContent = (descInput.value || 'Descrição de exemplo');
 }
 [appName, titleInput, descInput, useAppAsTitle].forEach(el => el.addEventListener('input', updatePreview));
 updatePreview();
-
+icons/unnamed.webp
 askPerm.addEventListener('click', async () => {
   const status = await Notification.requestPermission();
   if (status !== 'granted') alert('Ative as notificações para continuar.');
@@ -105,7 +102,7 @@ startBtn.addEventListener('click', async () => {
   const n = parseInt(qty.value, 10) || 1;
   const delay = Math.max(1, parseInt(gap.value, 10) || 1) * (unit === 'm' ? 60000 : 1000);
 
-  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'NotifyLab') : (titleInput.value || appName.value || selectedAppName || 'NotifyLab');
+  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'Hotmart') : (titleInput.value || appName.value || selectedAppName || 'Hotmart');
   const parts = [];
   if (!useAppAsTitle.checked && titleInput.value) parts.push(titleInput.value);
   if (descInput.value) parts.push(descInput.value);
