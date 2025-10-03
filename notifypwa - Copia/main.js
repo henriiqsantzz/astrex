@@ -105,8 +105,7 @@ askPerm.addEventListener('click', async () => {
   if (!('Notification' in window)) {
     alert('Este navegador não suporta Notifications API.');
     return;
-  }
-
+  });
 
 startBtn.addEventListener('click', async () => {
   if (!('Notification' in window)) {
