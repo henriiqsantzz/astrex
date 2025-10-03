@@ -7,12 +7,12 @@
   "theme_color": "#0b1c13",
   "icons": [
     {
-      "src": "icons/hotmart.ico",
+      "src": "icons/unnamed.webp",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/hotmart.ico",
+      "src": "icons/unnamed.webp",
       "sizes": "512x512",
       "type": "image/png"
     }
