@@ -81,38 +81,56 @@ logoUpload.addEventListener('change', async () => {
 
 function updatePreview(){
   selectedAppName = appName.value || selectedAppName || 'Hotmart';
-  const title = useAppAsTitle.checked ? selectedAppName : (titleInput.value || selectedAppName);
+  const title = useAppAsTitle.checked
+    ? selectedAppName
+    : (titleInput.value || selectedAppName);
   previewTitle.textContent = title;
+  // Corpo = apenas a descrição
   previewBody.textContent = (descInput.value || 'Descrição de exemplo');
 }
-[appName, titleInput, descInput, useAppAsTitle].forEach(el => el.addEventListener('input', updatePreview));
+[appName, titleInput, descInput, useAppAsTitle].forEach(el =>
+  el.addEventListener('input', updatePreview)
+);
 updatePreview();
-icons/unnamed.webp
+
 askPerm.addEventListener('click', async () => {
   const status = await Notification.requestPermission();
   if (status !== 'granted') alert('Ative as notificações para continuar.');
 });
 
 startBtn.addEventListener('click', async () => {
-  if (!('Notification' in window)) return alert('Seu navegador não suporta Notifications API.');
+  if (!('Notification' in window)) {
+    return alert('Seu navegador não suporta Notifications API.');
+  }
   if (Notification.permission !== 'granted') {
     const status = await Notification.requestPermission();
     if (status !== 'granted') return alert('Permissão negada.');
   }
+
   const n = parseInt(qty.value, 10) || 1;
   const delay = Math.max(1, parseInt(gap.value, 10) || 1) * (unit === 'm' ? 60000 : 1000);
 
-  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'Hotmart') : (titleInput.value || appName.value || selectedAppName || 'Hotmart');
-  const parts = [];
-  if (!useAppAsTitle.checked && titleInput.value) parts.push(titleInput.value);
-  if (descInput.value) parts.push(descInput.value);
-  const body = parts.join(' • ');
+  // Título
+  const title = useAppAsTitle.checked
+    ? (appName.value || selectedAppName || 'Hotmart')
+    : (titleInput.value || appName.value || selectedAppName || 'Hotmart');
 
-  for (let i=0; i<n; i++) {
+  // Corpo = SOMENTE a descrição (sem repetir o título)
+  const body = (descInput.value || '').trim();
+
+  for (let i = 0; i < n; i++) {
     setTimeout(async () => {
       const reg = await navigator.serviceWorker.getRegistration();
-      const opts = { body, icon: iconDataUrl, badge: 'icons/badge.png', vibrate: [100,50,100], tag: 'notif-seq', data:{ts:Date.now()} };
-      if (reg) reg.showNotification(title, opts); else new Notification(title, opts);
+      const opts = {
+        body,                         // <- só a descrição
+        icon: iconDataUrl,            // <- logo escolhida
+        badge: 'icons/badge.png',
+        vibrate: [100, 50, 100],
+        tag: 'notif-seq',
+        data: { ts: Date.now() }
+      };
+      if (reg) reg.showNotification(title, opts);
+      else     new Notification(title, opts);
     }, i * delay);
   }
 });
