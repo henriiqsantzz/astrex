@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NotifyLab</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0b1c13" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <style>
+    :root{
+      --bg:#0a1210; --panel:#0f1d18; --text:#e8f5ee; --muted:#a6c3b7; --accent:#13c27a; --accent-2:#0fa968; --stroke:#123328;
+    }
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(1200px 600px at 80% -10%, #0e2d21 0%, #0a1210 60%) fixed;color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    .wrap{max-width:980px;margin:24px auto;padding:16px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--stroke);border-radius:16px;padding:16px}
+    .left{grid-column:span 6}.right{grid-column:span 6}
+    @media(max-width:900px){.left,.right{grid-column:span 12}}
+    .title{font-size:18px;margin:0 0 12px;font-weight:700}
+    .row{display:flex;gap:12px;align-items:center}
+    .logos{display:flex;gap:10px;flex-wrap:wrap}
+    .logo-btn{height:40px;width:40px;display:grid;place-items:center;border-radius:10px;background:#0b1814;border:1px solid var(--stroke);cursor:pointer;transition:.2s;color:#fff;font-weight:700}
+    .logo-btn:hover{transform:translateY(-1px)}
+    .logo-btn.active{outline:2px solid var(--accent)}
+    input[type="text"], input[type="number"], .input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--stroke);background:#0b1814;color:var(--text)}
+    .hint{color:var(--muted);font-size:12px;margin-top:6px}
+    .label{font-size:13px;color:var(--muted);margin:16px 0 6px}
+    .btn{background:var(--accent);color:#05120c;border:none;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .btn.secondary{background:#152720;color:var(--text);border:1px solid var(--stroke)}
+    .switch{display:inline-grid;grid-auto-flow:column;gap:6px;background:#0b1814;border:1px solid var(--stroke);padding:6px;border-radius:12px}
+    .pill{padding:8px 12px;border-radius:8px;cursor:pointer}
+    .pill.active{background:var(--accent);color:#052217;font-weight:700}
+    .range{width:100%}
+    .footer{opacity:.7;font-size:12px;margin-top:24px}
+    .kpi{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+    .preview{display:flex;gap:12px;align-items:center;padding:12px;border:1px dashed var(--stroke);border-radius:12px}
+    .preview img{height:36px;width:36px;border-radius:9px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="grid">
+      <section class="card left" aria-label="Configurações de conteúdo">
+        <h2 class="title">Modelos / Logo</h2>
+        <div class="logos" id="logoChoices">
+          <button class="logo-btn active" data-builtin="default" data-appname="NotifyLab" title="Padrão">N</button>
+          <button class="logo-btn" data-builtin="kiwify" data-appname="Kiwify" title="Kiwify">K</button>
+          <button class="logo-btn" data-builtin="c6" data-appname="C6 Bank" title="C6">C6</button>
+          <button class="logo-btn" data-builtin="e" data-appname="Ebanx" title="E">E</button>
+          <button class="logo-btn" data-builtin="b" data-appname="Banco b." title="B">B</button>
+          <button class="logo-btn" data-builtin="f" data-appname="FastPay" title="F">F</button>
+          <label class="logo-btn" title="Upload (escolha nome do app na sequência)">
+            <input type="file" id="logoUpload" accept="image/*" hidden />+
+          </label>
+        </div>
+
+        <div class="label">Nome do App Selecionado</div>
+        <input id="appName" type="text" class="input" placeholder="Ex: Kiwify" value="NotifyLab" />
+
+        <div class="label">Conteúdo da Notificação</div>
+        <div class="row">
+          <input id="titleInput" type="text" placeholder="Título (opcional)" />
+        </div>
+        <div class="row" style="margin-top:8px">
+          <input id="descInput" type="text" placeholder="Descrição / mensagem" />
+        </div>
+        <div class="row" style="gap:8px;margin-top:8px">
+          <label class="row" style="gap:8px"><input id="useAppAsTitle" type="checkbox" checked /> Usar <b>nome do app</b> como título</label>
+        </div>
+        <div class="hint">Se marcado, o título exibido será o nome do app (ex.: "Kiwify"); o campo "Título" vira subtítulo no corpo.</div>
+
+        <div class="label">Pré-visualização</div>
+        <div class="preview" id="preview">
+          <img id="previewIcon" src="icons/icon-192.png" alt="logo" />
+          <div>
+            <div id="previewTitle" style="font-weight:700">NotifyLab</div>
+            <div id="previewBody" style="opacity:.8">Descrição de exemplo</div>
+          </div>
+        </div>
+
+        <div class="footer">Para alterar nome/ícone <b>do app instalado</b>, edite <code>manifest.json</code>. Aqui você escolhe o <b>nome e o ícone por notificação</b> e também o que aparece na UI.</div>
+      </section>
+
+      <section class="card right" aria-label="Ajustes das Notificações">
+        <h2 class="title">Ajustes das Notificações</h2>
+
+        <div class="kpi">
+          <div class="label">Quantidade de Notificações</div>
+          <div><span id="qtyLabel">1</span>x</div>
+        </div>
+        <input id="qty" class="range" type="range" min="1" max="50" value="1" />
+
+        <div class="label" style="margin-top:10px">Tempo Entre as Notificações</div>
+        <div class="row" style="justify-content:space-between">
+          <div class="switch" role="tablist" aria-label="Unidade de tempo">
+            <div class="pill active" data-unit="s">Segundos</div>
+            <div class="pill" data-unit="m">Minutos</div>
+          </div>
+          <div class="row" style="gap:8px">
+            <input id="gap" type="number" min="1" step="1" value="3" style="width:90px" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:16px;gap:10px">
+          <button id="askPerm" class="btn secondary">Permitir Notificações</button>
+          <button id="installBtn" class="btn secondary" hidden>Instalar</button>
+          <button id="start" class="btn">Iniciar</button>
+        </div>
+
+        <div class="hint" style="margin-top:10px">As notificações locais só funcionam com o app aberto. Para background real, use Web Push.</div>
+      </section>
+    </div>
+  </div>
+
+  <script src="main.js" type="module"></script>
+</body>
+</html>
