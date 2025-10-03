@@ -79,8 +79,23 @@ logoUpload.addEventListener('change', async () => {
   reader.readAsDataURL(file);
 });
 
-function updatePreview(){ selectedAppName=appName.value||selectedAppName||'NotifyLab'; const title=useAppAsTitle.checked ? selectedAppName : (titleInput.value||selectedAppName); previewTitle.textContent=title; previewBody.textContent=(descInput.value||'Descrição de exemplo'); }
-[appName,titleInput,descInput,useAppAsTitle].forEach(el=>el.addEventListener('input',updatePreview)); updatePreview();
+function updatePreview() {
+  selectedAppName = appName.value || selectedAppName || 'NotifyLab';
+
+  const title = useAppAsTitle.checked
+    ? selectedAppName
+    : (titleInput.value || selectedAppName);
+
+  previewTitle.textContent = title;
+ 
+  previewBody.textContent = (descInput.value || 'Descrição de exemplo');
+}
+
+[appName, titleInput, descInput, useAppAsTitle].forEach((el) => {
+  el.addEventListener('input', updatePreview);
+});
+
+updatePreview();
 
 askPerm.addEventListener('click', async () => {
   const status = await Notification.requestPermission();
