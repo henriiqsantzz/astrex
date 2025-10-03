@@ -97,10 +97,52 @@ askPerm.addEventListener('click', async () => {
 });
 
 startBtn.addEventListener('click', async () => {
-  if (!('Notification' in window)) return alert('Seu navegador não suporta Notifications API.');
+  // Checagens básicas
+  if (!('Notification' in window)) {
+    alert('Seu navegador não suporta Notifications API.');
+    return;
+  }
   if (Notification.permission !== 'granted') {
     const status = await Notification.requestPermission();
-    if (status !== 'granted') return alert('Permissão negada.');
+    if (status !== 'granted') {
+      alert('Permissão negada.');
+      return;
+    }
+  }
+
+  // Quantidade e intervalo
+  const n = parseInt(qty?.value, 10) || 1;
+  const delay = Math.max(1, parseInt(gap?.value, 10) || 1) * (unit === 'm' ? 60000 : 1000);
+
+  // Título da notificação
+  const title = useAppAsTitle.checked
+    ? (appName.value || selectedAppName || 'NotifyLab')
+    : (titleInput.value || appName.value || selectedAppName || 'NotifyLab');
+
+  // Corpo = APENAS a descrição (sem repetir o título)
+  const body = (descInput.value || '').trim();
+
+  // Disparo (em sequência se n > 1)
+  for (let i = 0; i < n; i++) {
+    setTimeout(async () => {
+      try {
+        const reg = await navigator.serviceWorker.getRegistration();
+        const opts = {
+          body,                          // <- usa só a descrição
+          icon: iconDataUrl,             // <- logo escolhida
+          badge: 'icons/badge.png',
+          vibrate: [100, 50, 100],
+          tag: 'notif-seq',
+          data: { ts: Date.now() }
+        };
+        if (reg) reg.showNotification(title, opts);
+        else     new Notification(title, opts);
+      } catch (err) {
+        console.error('Erro ao enviar notificação:', err);
+      }
+    }, i * delay);
+  }
+});
   }
   const n = parseInt(qty.value, 10) || 1;
   const delay = Math.max(1, parseInt(gap.value, 10) || 1) * (unit === 'm' ? 60000 : 1000);
