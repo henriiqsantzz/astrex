@@ -78,17 +78,15 @@ logoUpload.addEventListener('change', async () => {
   };
   reader.readAsDataURL(file);
 });
-const title = useAppAsTitle.checked ? selectedAppName : (titleInput.value || selectedAppName);
-previewTitle.textContent = title;
-// Corpo = apenas a descrição (sem repetir o título)
-previewBody.textContent = (descInput.value || 'Descrição de exemplo');
 
 function updatePreview(){
   selectedAppName = appName.value || selectedAppName || 'Hotmart';
   const title = useAppAsTitle.checked ? selectedAppName : (titleInput.value || selectedAppName);
-previewTitle.textContent = title;
-// Corpo = apenas a descrição (sem repetir o título)
-previewBody.textContent = (descInput.value || 'Descrição de exemplo');
+  previewTitle.textContent = title;
+  const parts = [];
+  if (!useAppAsTitle.checked && titleInput.value) parts.push(titleInput.value);
+  if (descInput.value) parts.push(descInput.value);
+  previewBody.textContent = (descInput.value || 'Descrição de exemplo');
 }
 [appName, titleInput, descInput, useAppAsTitle].forEach(el => el.addEventListener('input', updatePreview));
 updatePreview();
