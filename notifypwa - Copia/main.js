@@ -94,9 +94,28 @@ function updatePreview(){
 updatePreview();
 
 askPerm.addEventListener('click', async () => {
-  const status = await Notification.requestPermission();
-  if (status !== 'granted') alert('Ative as notificações para continuar.');
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  // iOS só concede permissão para apps instalados (PWA/standalone)
+  if (!isStandalone) {
+    alert('No iPhone, primeiro adicione à Tela de Início e abra pelo ícone para permitir notificações.');
+    return;
+  }
+
+  if (!('Notification' in window)) {
+    alert('Este navegador não suporta Notifications API.');
+    return;
+  }
+
+  const status = await Notification.requestPermission(); // precisa ser após clique (gesto do usuário)
+  if (status !== 'granted') {
+    alert('Permissão negada nas configurações. Vá em Ajustes → Notificações → (nome do app) e ative.');
+    return;
+  }
+
+  alert('Permissão concedida ✅. Se não aparecer banner, veja Ajustes → Notificações → (nome do app).');
 });
+
 
 startBtn.addEventListener('click', async () => {
   if (!('Notification' in window)) {
