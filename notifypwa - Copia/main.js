@@ -105,7 +105,16 @@ askPerm.addEventListener('click', async () => {
   if (!('Notification' in window)) {
     alert('Este navegador não suporta Notifications API.');
     return;
-  });
+  }
+
+  const status = await Notification.requestPermission(); // precisa ser após clique (gesto do usuário)
+  if (status !== 'granted') {
+    alert('Permissão negada nas configurações. Vá em Ajustes → Notificações → (nome do app) e ative.');
+    return;
+  }
+
+  alert('Permissão concedida ✅. Se não aparecer banner, veja Ajustes → Notificações → (nome do app).');
+});
 
 startBtn.addEventListener('click', async () => {
   if (!('Notification' in window)) {
