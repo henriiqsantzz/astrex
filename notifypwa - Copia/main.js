@@ -31,8 +31,8 @@ const previewBody = document.getElementById('previewBody');
 const previewIcon = document.getElementById('previewIcon');
 
 let unit = 's'; // s|m
-let iconDataUrl = 'icons/unnamed.webp';
-let selectedAppName = 'Hotmart';
+let iconDataUrl = 'icons/astrex.png';
+let selectedAppName = 'icons/astrex.png';
 
 qty.addEventListener('input', () => qtyLabel.textContent = qty.value);
 
