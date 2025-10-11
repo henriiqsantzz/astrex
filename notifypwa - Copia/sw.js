@@ -1,7 +1,7 @@
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open('notifylab-v1').then(cache => cache.addAll([
     './', './index.html', './main.js', './manifest.json',
-    './icons/unnamed.webp', './icons/unnamed.webp', './icons/badge.png',
+    './icons/astrex.png', './icons/astrex.png', './icons/badge.png',
     './icons/swatch-c6.png', './icons/swatch-e.png', './icons/swatch-b.png', './icons/swatch-f.png',
     './icons/swatch-kiwify.png'
   ])));
