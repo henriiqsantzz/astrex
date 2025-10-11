@@ -31,8 +31,8 @@ const previewBody = document.getElementById('previewBody');
 const previewIcon = document.getElementById('previewIcon');
 
 let unit = 's'; // s|m
-let iconDataUrl = 'icons/hotmart.ico';
-let selectedAppName = 'Hotmart';
+let iconDataUrl = 'icons/astrex.png';
+let selectedAppName = 'Astrex';
 
 qty.addEventListener('input', () => qtyLabel.textContent = qty.value);
 
@@ -51,7 +51,7 @@ logoChoices.addEventListener('click', (ev) => {
   btn.classList.add('active');
   const type = btn.dataset.builtin;
   const map = {
-    default: { icon: 'icons/hotmart.ico', name: 'Hotmart' },
+    default: { icon: 'icons/astrex.png', name: 'Astrex' },
     kiwify: { icon: 'icons/swatch-kiwify.png', name: 'Kiwify' },
     c6: { icon: 'icons/swatch-c6.png', name: 'C6 Bank' },
     e: { icon: 'icons/swatch-e.png', name: 'Ebanx' },
@@ -80,7 +80,7 @@ logoUpload.addEventListener('change', async () => {
 });
 
 function updatePreview(){
-  selectedAppName = appName.value || selectedAppName || 'NotifyLab';
+  selectedAppName = appName.value || selectedAppName || 'Astrex';
   const title = useAppAsTitle.checked ? selectedAppName : (titleInput.value || selectedAppName);
   previewTitle.textContent = title;
   const parts = [];
@@ -105,7 +105,7 @@ startBtn.addEventListener('click', async () => {
   const n = parseInt(qty.value, 10) || 1;
   const delay = Math.max(1, parseInt(gap.value, 10) || 1) * (unit === 'm' ? 60000 : 1000);
 
-  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'NotifyLab') : (titleInput.value || appName.value || selectedAppName || 'NotifyLab');
+  const title = useAppAsTitle.checked ? (appName.value || selectedAppName || 'Astrex') : (titleInput.value || appName.value || selectedAppName || 'Astrex');
   const parts = [];
   if (!useAppAsTitle.checked && titleInput.value) parts.push(titleInput.value);
   if (descInput.value) parts.push(descInput.value);
