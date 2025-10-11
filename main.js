@@ -31,7 +31,7 @@ const previewBody = document.getElementById('previewBody');
 const previewIcon = document.getElementById('previewIcon');
 
 let unit = 's'; // s|m
-let iconDataUrl = '/icons/astrex.png';
+let iconDataUrl = 'icons/astrex.png';
 let selectedAppName = 'Astrex';
 
 qty.addEventListener('input', () => qtyLabel.textContent = qty.value);
@@ -51,7 +51,7 @@ logoChoices.addEventListener('click', (ev) => {
   btn.classList.add('active');
   const type = btn.dataset.builtin;
   const map = {
-    default: { icon: '/icons/astrex.png', name: 'Astrex' },
+    default: { icon: 'icons/astrex.png', name: 'Astrex' },
     kiwify: { icon: 'icons/swatch-kiwify.png', name: 'Kiwify' },
     c6: { icon: 'icons/swatch-c6.png', name: 'C6 Bank' },
     e: { icon: 'icons/swatch-e.png', name: 'Ebanx' },
