@@ -60,7 +60,7 @@ document.getElementById('testLocalBtn').addEventListener('click', () => {
   if (navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage({ type: 'local-notification', title, description });
   } else {
-    new Notification(title, { body: description, icon: '/icons/icon-192.png' });
+    new Notification(title, { body: description, icon: '/icons/astrex.ico' });
   }
 });
 
