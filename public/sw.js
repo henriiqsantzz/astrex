@@ -6,8 +6,8 @@ self.addEventListener('push', function(event) {
   const title = payload.title || 'Astrex';
   const options = {
     body: payload.description || '',
-    icon: '/icons/icon-192.png',
-    badge: '/icons/icon-192.png',
+    icon: '/icons/astrex.ico',
+    badge: '/icons/astrex.ico',
     vibrate: [100,50,100],
     data: { dateOfArrival: Date.now() }
   };
@@ -23,6 +23,6 @@ self.addEventListener('notificationclick', function(event) {
 self.addEventListener('message', function(event) {
   if (event.data && event.data.type === 'local-notification') {
     const { title, description } = event.data;
-    self.registration.showNotification(title, { body: description, icon: '/icons/icon-192.png' });
+    self.registration.showNotification(title, { body: description, icon: '/icons/astrex.ico' });
   }
 });
