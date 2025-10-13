@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="manifest" href="/manifest.json">
+  <title>Astrex — Painel de Notificações</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:0;padding:20px;background:#f5f5f7;color:#111}
+    header{display:flex;align-items:center;gap:12px}
+    img.logo{width:48px;height:48px;border-radius:12px}
+    .card{background:#fff;padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06);margin-top:16px}
+    label{display:block;margin-top:8px;font-weight:600}
+    input[type=text], textarea{width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid #e2e2e6}
+    button{margin-top:12px;padding:10px 14px;border-radius:10px;border:0;background:#e91e63;color:#fff;font-weight:700;cursor:pointer}
+    small{color:#666}
+    .row{display:flex;gap:8px}
+  </style>
+</head>
+<body>
+  <header>
+    <img src="/icons/icon-192.png" class="logo" alt="Astrex logo">
+    <div>
+      <h1 style="margin:0">Astrex</h1>
+      <small>PWA de notificações — Painel</small>
+    </div>
+  </header>
+
+  <div class="card">
+    <h2>Registrar dispositivo / Permissões</h2>
+    <p>Clique em <strong>Ativar</strong> para permitir notificações e registrar o dispositivo neste servidor.</p>
+    <button id="enableBtn">Ativar notificações</button>
+    <div id="status" style="margin-top:8px"></div>
+  </div>
+
+  <div class="card">
+    <h2>Criar notificação</h2>
+    <label>Título</label>
+    <input type="text" id="title" placeholder="Título da notificação" />
+    <label>Descrição</label>
+    <textarea id="description" rows="3" placeholder="Descrição (aparece no corpo da notificação)"></textarea>
+    <div class="row">
+      <button id="sendBtn">Enviar notificação</button>
+      <button id="testLocalBtn" style="background:#555">Testar local</button>
+    </div>
+    <div id="sendResult" style="margin-top:10px"></div>
+  </div>
+
+  <div class="card">
+    <h2>Assinaturas registradas</h2>
+    <button id="refreshSubs">Atualizar lista</button>
+    <pre id="subsList" style="white-space:pre-wrap;margin-top:8px;max-height:200px;overflow:auto"></pre>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
